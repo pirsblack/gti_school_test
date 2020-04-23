@@ -139,6 +139,6 @@ survey.questions.map! do |question|
   end
   puts 'enter id'
 
-  puts Variant.all(id_variant: id_variant)
-
+  x = Variant.all(id_variant: id_variant)
+  pp x
 end
