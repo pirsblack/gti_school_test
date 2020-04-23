@@ -4,7 +4,7 @@ class User
 
   attr_accessor :name, :surname, :email, :id_user
 
-  def initialize( name, surname, email, id_user )
+  def initialize( name, surname, email )
     @name = name
     @surname = surname
     @email = email
@@ -18,10 +18,9 @@ class User
 end
 
 class Survey
-
   attr_accessor :id_survey, :survey_name, :questions
 
-  def initialize( survey_name, id_survey )
+  def initialize( survey_name)
     @survey_name = survey_name
     @id_survey = SecureRandom.hex(3)
     @questions = []
@@ -56,7 +55,7 @@ class Question
 
   attr_accessor :id_question, :text, :variants
 
-  def initialize(id_question, text, variants)
+  def initialize(text)
     @id_question = SecureRandom.hex(3)
     @text = text
     @variants = []
@@ -77,9 +76,9 @@ end
 class Variant
   attr_accessor :id_variant, :text, :random_variant
 
-  def initialize( text, id_variant, random_variant )
+  def initialize( text )
     @text = text
-    @id_variant = SecureRandom.hex(3)
+    @id_variant = SecureRandom.random_number(100)
     @random_variant = rand(1..10)
   end
 end
@@ -87,7 +86,7 @@ end
 class Answer
   attr_accessor :id_answer, :random_answer
 
-  def initialize( id_answer, random_answer )
+  def initialize(random_answer )
     @id_answer = SecureRandom.hex(3)
     @random_answer = random_answer
   end
@@ -98,29 +97,29 @@ puts 'Enter name, surname, email'
 name = gets.chomp
 surname = gets.chomp
 email = gets.chomp
-id = @id_user
-user = User.new(name, surname, email, id)
+#id = @id_user
+user = User.new(name, surname, email)
 
 puts 'Add survey'
 survey_name = gets.chomp
-id_survey = @id_survey
-survey = Survey.new(survey_name, id_survey)
+# id_survey = @id_survey
+survey = Survey.new(survey_name)
 
 loop do
   puts 'Add question'
   text = gets.chomp
-  id_question = @id_question
-  variants = []
+  # id_question = @id_question
+  # variants = []
   break if text == 's'
-  question = Question.new(text, id_question, variants)
+  question = Question.new(text) #id_question, variants
   survey.add_questions(question)
   loop do
     puts 'Add variants'
     text = gets.chomp
-    id_variant = @id_variant
-    r = @random_variant
+    # id_variant = @id_variant
+    # r = @random_variant
     break if text == 's'
-    variant = Variant.new(text, id_variant, r)
+    variant = Variant.new(text)  # id_variant, r
     question.add_variants(variant)
   end
 end
@@ -128,9 +127,9 @@ end
 puts 'your test '
 
 survey.questions.map! do |question|
-  puts 'question:'
+  puts 'question: '
   puts question.text
-  print 'id question'
+  puts 'id question'
   puts question.id_question
   puts 'variant:'
   question.variants.map! do |variant|
@@ -138,4 +137,8 @@ survey.questions.map! do |question|
     print "variant id: "
     puts variant.id_variant
   end
+  puts 'enter id'
+
+  puts Variant.all(id_variant: id_variant)
+
 end
