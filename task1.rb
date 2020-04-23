@@ -126,13 +126,13 @@ end
 
 puts 'your test '
 
-survey.questions.map! do |question|
+survey.questions.each do |question|
   puts 'question: '
   puts question.text
   puts 'id question'
   puts question.id_question
   puts 'variant:'
-  question.variants.map! do |variant|
+  question.variants.each do |variant|
     puts variant.text
     print "variant id: "
     puts variant.id_variant
